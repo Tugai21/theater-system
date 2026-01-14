@@ -9,7 +9,6 @@ Route::get('/', function () {
     return redirect()->route('login');
 });
 
-// Status check route
 Route::get('/admin-status', function () {
     try {
         $user = User::where('email', 'admin@gmail.com')->first();
@@ -36,29 +35,27 @@ Route::get('/admin-status', function () {
     }
 });
 
-// Setup route to create or update admin user
 Route::get('/setup-admin', function () {
     try {
-        // First, check if admin user exists
         $user = User::where('email', 'admin@gmail.com')->first();
         
         if ($user) {
-            // Update existing user to ensure is_admin is true
-            $user->update([
-                'is_admin' => true,
-                'email_verified_at' => $user->email_verified_at ?? now(),
-            ]);
+            $user->is_admin = true;
+            $user->email_verified_at = $user->email_verified_at ?? now();
+            $user->save();
+
             return response("✅ Admin user updated successfully!\n\nEmail: admin@gmail.com\nPassword: 123456789\nAdmin Status: YES", 200);
         } else {
-            // Create new admin user
             $user = User::create([
                 'name' => 'Admin User',
                 'email' => 'admin@gmail.com',
                 'password' => bcrypt('123456789'),
-                'is_admin' => true,
                 'email_verified_at' => now(),
             ]);
-            
+
+            $user->is_admin = true;
+            $user->save();
+
             return response("✅ Admin user created successfully!\n\nEmail: admin@gmail.com\nPassword: 123456789\nAdmin Status: YES", 201);
         }
     } catch (\Exception $e) {
@@ -79,6 +76,13 @@ Route::middleware('auth')->group(function () {
         ->names('admin.performances')
         ->middleware('admin')
         ->except(['show']);
+
+    Route::resource('admin/venues', \App\Http\Controllers\VenueController::class)
+        ->names('admin.venues')
+        ->middleware('admin')
+        ->except(['show']);
+
+    Route::get('media/posters/{filename}', [\App\Http\Controllers\MediaController::class, 'poster'])->name('media.poster');
     
     Route::get('admin/users', [UserController::class, 'index'])->name('admin.users.index')->middleware('admin');
     Route::post('admin/users/{user}/toggle-admin', [UserController::class, 'toggleAdmin'])->name('admin.users.toggleAdmin')->middleware('admin');

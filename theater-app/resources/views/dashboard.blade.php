@@ -12,7 +12,7 @@
                 @foreach($performances as $performance)
                     <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg hover:shadow-lg transition-shadow duration-300">
                         <div class="h-48 overflow-hidden bg-gray-100">
-                            <img src="{{ asset('storage/' . $performance->image_path) }}" class="w-full h-full object-cover">
+                            <img src="{{ route('media.poster', basename($performance->image_path)) }}" class="w-full h-full object-cover">
                         </div>
                         
                         <div class="p-6">

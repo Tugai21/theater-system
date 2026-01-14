@@ -37,6 +37,9 @@ new class extends Component
                         <x-nav-link :href="route('admin.performances.index')" :active="request()->routeIs('admin.performances.*')" wire:navigate>
                             🎭 {{ __('Постановки') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('admin.venues.index')" :active="request()->routeIs('admin.venues.*')" wire:navigate>
+                            📍 {{ __('Места') }}
+                        </x-nav-link>
                         <x-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')" wire:navigate>
                             👥 {{ __('Потребители') }}
                         </x-nav-link>
@@ -95,6 +98,9 @@ new class extends Component
             @if(auth()->user()->is_admin)
                 <x-responsive-nav-link :href="route('admin.performances.index')" :active="request()->routeIs('admin.performances.*')" wire:navigate>
                     🎭 {{ __('Постановки') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('admin.venues.index')" :active="request()->routeIs('admin.venues.*')" wire:navigate>
+                    📍 {{ __('Места') }}
                 </x-responsive-nav-link>
                 <x-responsive-nav-link :href="route('admin.users.index')" :active="request()->routeIs('admin.users.*')" wire:navigate>
                     👥 {{ __('Потребители') }}

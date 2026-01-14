@@ -20,7 +20,7 @@
                     @method('PATCH')
 
                     <div class="mb-4 text-center">
-                        <img src="{{ asset('storage/' . $performance->image_path) }}" class="h-40 mx-auto rounded shadow">
+                        <img src="{{ route('media.poster', basename($performance->image_path)) }}" class="h-40 mx-auto rounded shadow">
                         <p class="text-xs text-gray-500 mt-1">Текущ плакат</p>
                     </div>
 

@@ -16,14 +16,18 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         // 1. Създаваме АДМИН потребител, за да можеш да влезеш в системата
-        \App\Models\User::firstOrCreate(
+        $admin = \App\Models\User::firstOrCreate(
             ['email' => 'admin@gmail.com'],
             [
                 'name' => 'Admin User',
                 'password' => bcrypt('123456789'),
-                'is_admin' => true,
             ]
         );
+
+        if (!$admin->is_admin) {
+            $admin->is_admin = true;
+            $admin->save();
+        }
 
     // 2. Създаваме няколко примерни Места (Venues), за да не е празно менюто
     \App\Models\Venue::create([

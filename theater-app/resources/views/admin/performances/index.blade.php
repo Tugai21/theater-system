@@ -38,7 +38,7 @@
                         @forelse($performances as $performance)
                             <tr>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <img src="{{ asset('storage/' . $performance->image_path) }}" class="w-16 h-24 object-cover rounded shadow">
+                                    <img src="{{ route('media.poster', basename($performance->image_path)) }}" class="w-16 h-24 object-cover rounded shadow">
                                 </td>
                                 <td class="px-6 py-4">
                                     <div class="text-sm font-bold text-gray-900">{{ $performance->title }}</div>

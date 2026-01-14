@@ -21,16 +21,21 @@ class CreateAdminUser extends Command
         $existingUser = User::where('email', $email)->first();
         
         if ($existingUser) {
-            $this->error("Потребителят с имейл '{$email}' вече съществува!");
-            return 1;
+            $existingUser->is_admin = true;
+            $existingUser->save();
+
+            $this->info("✅ Потребителят '{$existingUser->name}' съществува — статусът е актуализиран като администратор.");
+            return 0;
         }
 
-        User::create([
+        $user = User::create([
             'name' => $name,
             'email' => $email,
             'password' => Hash::make($password),
-            'is_admin' => true,
         ]);
+
+        $user->is_admin = true;
+        $user->save();
 
         $this->info("✅ Администраторът '{$name}' е успешно създаден!");
         $this->info("📧 Имейл: {$email}");

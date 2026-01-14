@@ -26,7 +26,8 @@ class UserController extends Controller
 
     public function toggleAdmin(User $user)
     {
-        $user->update(['is_admin' => !$user->is_admin]);
+        $user->is_admin = !$user->is_admin;
+        $user->save();
 
         $status = $user->is_admin ? 'одобрен като администратор' : 'премахнат от администраторите';
         return redirect()->route('admin.users.index')
