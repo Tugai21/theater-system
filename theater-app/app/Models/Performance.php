@@ -9,7 +9,7 @@ class Performance extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'date', 'ticket_price', 'image_path', 'venue_id'];
+    protected $fillable = ['title', 'date', 'image_path', 'venue_id'];
 
     protected $casts = [
         'date' => 'date',
@@ -18,5 +18,10 @@ class Performance extends Model
     public function venue()
     {
         return $this->belongsTo(Venue::class);
+    }
+
+    public function ticketTypes()
+    {
+        return $this->hasMany(TicketType::class);
     }
 }

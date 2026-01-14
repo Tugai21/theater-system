@@ -30,7 +30,7 @@
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Плакат</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Име & Дата</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Място</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Цена</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Цени</th>
                             <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Действия</th>
                         </tr>
                     </thead>
@@ -49,7 +49,15 @@
                                     <div class="text-xs text-gray-500">{{ $performance->venue->city }}</div>
                                 </td>
                                 <td class="px-6 py-4 text-sm text-gray-500">
-                                    {{ number_format($performance->ticket_price, 2) }} лв.
+                                    @if($performance->ticketTypes->isNotEmpty())
+                                        <ul class="text-sm text-gray-700 space-y-1">
+                                            @foreach($performance->ticketTypes->where('is_active', true) as $type)
+                                                <li>{{ $type->name }}: {{ number_format($type->price, 2) }} лв.</li>
+                                            @endforeach
+                                        </ul>
+                                    @else
+                                        <span class="text-gray-400">-</span>
+                                    @endif
                                 </td>
                                 <td class="px-6 py-4 text-sm font-medium">
                                     <a href="{{ route('admin.performances.edit', $performance) }}" class="text-indigo-600 hover:text-indigo-900 mr-3">Редакция</a>

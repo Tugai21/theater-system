@@ -11,13 +11,13 @@ class PerformanceController extends Controller
 {
     public function dashboard()
     {
-        $performances = Performance::with('venue')->latest()->take(6)->get();
+        $performances = Performance::with(['venue','ticketTypes'])->latest()->take(6)->get();
         return view('dashboard', compact('performances'));
     }
 
     public function index(Request $request)
     {
-        $query = Performance::with('venue');
+        $query = Performance::with(['venue','ticketTypes']);
 
         if ($request->filled('search')) {
             $search = $request->search;
@@ -47,20 +47,36 @@ class PerformanceController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'date' => 'required|date',
-            'ticket_price' => 'required|numeric|min:0',
+            'ticket_types.*' => 'nullable|numeric|min:0',
             'venue_id' => 'required|exists:venues,id',
             'photo' => 'required|image|max:2048' 
         ]);
 
         $path = $request->file('photo')->store('posters', 'public');
 
-        Performance::create([
+        $performance = Performance::create([
             'title' => $request->title,
             'date' => $request->date,
-            'ticket_price' => $request->ticket_price,
             'venue_id' => $request->venue_id,
             'image_path' => $path
         ]);
+
+        $types = [
+            'standard' => 'Стандартен',
+            'student' => 'Студент',
+            'child' => 'Дете',
+            'vip' => 'VIP'
+        ];
+
+        foreach ($types as $key => $name) {
+            $price = $request->input("ticket_types.$key");
+            if ($price !== null && $price !== '') {
+                $performance->ticketTypes()->create([
+                    'name' => $name,
+                    'price' => $price
+                ]);
+            }
+        }
 
         return redirect()->route('admin.performances.index')
             ->with('success', 'Постановката е добавена успешно!');
@@ -77,12 +93,12 @@ class PerformanceController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'date' => 'required|date',
-            'ticket_price' => 'required|numeric|min:0',
+            'ticket_types.*' => 'nullable|numeric|min:0',
             'venue_id' => 'required|exists:venues,id',
             'photo' => 'nullable|image|max:2048' 
         ]);
 
-        $data = $request->only(['title', 'date', 'ticket_price', 'venue_id']);
+        $data = $request->only(['title', 'date', 'venue_id']);
 
         if ($request->hasFile('photo')) {
             if ($performance->image_path) {
@@ -92,6 +108,28 @@ class PerformanceController extends Controller
         }
 
         $performance->update($data);
+
+        $types = [
+            'standard' => 'Стандартен',
+            'student' => 'Студент',
+            'child' => 'Дете',
+            'vip' => 'VIP'
+        ];
+
+        foreach ($types as $key => $name) {
+            $price = $request->input("ticket_types.$key");
+            if ($price !== null && $price !== '') {
+                $performance->ticketTypes()->updateOrCreate(
+                    ['name' => $name],
+                    ['price' => $price, 'is_active' => true]
+                );
+            } else {
+                $performance->ticketTypes()->updateOrCreate(
+                    ['name' => $name],
+                    ['is_active' => false]
+                );
+            }
+        }
 
         return redirect()->route('admin.performances.index')
             ->with('success', 'Постановката е обновена!');

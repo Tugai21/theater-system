@@ -44,8 +44,31 @@
                     </div>
 
                     <div class="mb-4">
-                        <label class="block font-medium text-sm text-gray-700">Цена на билет (лв.)</label>
-                        <input type="number" step="0.01" name="ticket_price" value="{{ old('ticket_price') }}" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full mt-1" required>
+                        <label class="block font-medium text-sm text-gray-700">Цени на типове билети (лв.)</label>
+
+                        <div class="grid grid-cols-2 gap-3 mt-2">
+                            <div>
+                                <label class="block text-sm text-gray-700">Стандартен</label>
+                                <input type="number" step="0.01" name="ticket_types[standard]" value="{{ old('ticket_types.standard') }}" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full mt-1">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm text-gray-700">Студент</label>
+                                <input type="number" step="0.01" name="ticket_types[student]" value="{{ old('ticket_types.student') }}" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full mt-1">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm text-gray-700">Дете</label>
+                                <input type="number" step="0.01" name="ticket_types[child]" value="{{ old('ticket_types.child') }}" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full mt-1">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm text-gray-700">VIP</label>
+                                <input type="number" step="0.01" name="ticket_types[vip]" value="{{ old('ticket_types.vip') }}" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full mt-1">
+                            </div>
+                        </div>
+
+                        <p class="text-xs text-gray-500 mt-2">Оставете празно да не се предлагат.</p>
                     </div>
 
                     <div class="mb-6">

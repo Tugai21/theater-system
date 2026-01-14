@@ -28,9 +28,13 @@
                                 <span>{{ $performance->date->format('d.m.Y') }}</span>
                             </div>
 
-                            <div class="flex justify-between items-center border-t pt-4">
-                                <span class="text-green-600 font-bold text-lg">{{ number_format($performance->ticket_price, 2) }} лв.</span>
-                                <span class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded">Билети</span>
+                            <div class="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center border-t pt-4 gap-2">
+                                <div class="flex gap-2 flex-wrap">
+                                    @foreach($performance->ticketTypes->where('is_active', true) as $type)
+                                        <span class="bg-green-50 border border-green-200 text-green-800 text-sm px-2 py-1 rounded">{{ $type->name }}: {{ number_format($type->price, 2) }} лв.</span>
+                                    @endforeach
+                                </div>
+                                <span class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded mt-2 sm:mt-0">Билети</span>
                             </div>
                         </div>
                     </div>

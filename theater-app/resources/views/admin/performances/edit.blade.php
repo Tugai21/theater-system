@@ -46,8 +46,31 @@
                     </div>
 
                     <div class="mb-4">
-                        <label class="block font-medium text-sm text-gray-700">Цена</label>
-                        <input type="number" step="0.01" name="ticket_price" value="{{ old('ticket_price', $performance->ticket_price) }}" class="border-gray-300 rounded-md w-full mt-1">
+                        <label class="block font-medium text-sm text-gray-700">Цени на типове билети (лв.)</label>
+
+                        <div class="grid grid-cols-2 gap-3 mt-2">
+                            <div>
+                                <label class="block text-sm text-gray-700">Стандартен</label>
+                                <input type="number" step="0.01" name="ticket_types[standard]" value="{{ old('ticket_types.standard', optional($performance->ticketTypes->firstWhere('name', 'Стандартен'))->price) }}" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full mt-1">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm text-gray-700">Студент</label>
+                                <input type="number" step="0.01" name="ticket_types[student]" value="{{ old('ticket_types.student', optional($performance->ticketTypes->firstWhere('name', 'Студент'))->price) }}" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full mt-1">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm text-gray-700">Дете</label>
+                                <input type="number" step="0.01" name="ticket_types[child]" value="{{ old('ticket_types.child', optional($performance->ticketTypes->firstWhere('name', 'Дете'))->price) }}" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full mt-1">
+                            </div>
+
+                            <div>
+                                <label class="block text-sm text-gray-700">VIP</label>
+                                <input type="number" step="0.01" name="ticket_types[vip]" value="{{ old('ticket_types.vip', optional($performance->ticketTypes->firstWhere('name', 'VIP'))->price) }}" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-full mt-1">
+                            </div>
+                        </div>
+
+                        <p class="text-xs text-gray-500 mt-2">Оставете празно да не се предлагат.</p>
                     </div>
 
                     <div class="mb-6">

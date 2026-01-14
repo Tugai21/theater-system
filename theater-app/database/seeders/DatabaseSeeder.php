@@ -47,5 +47,22 @@ class DatabaseSeeder extends Seeder
         'city' => 'Русе',
         'address' => 'пл. Свобода 4'
     ]);
-}
+        $types = [
+            'Стандартен',
+            'Студент',
+            'Дете',
+            'VIP'
+        ];
+
+        foreach (\App\Models\Performance::all() as $performance) {
+            if ($performance->ticketTypes()->count() === 0) {
+                foreach ($types as $t) {
+                    $performance->ticketTypes()->create([
+                        'name' => $t,
+                        'price' => 0,
+                    ]);
+                }
+            }
+        }
+    }
 }
