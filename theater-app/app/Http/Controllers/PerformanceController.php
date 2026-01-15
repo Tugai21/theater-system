@@ -9,10 +9,29 @@ use Illuminate\Support\Facades\Storage;
 
 class PerformanceController extends Controller
 {
-    public function dashboard()
+    public function publicDashboard(Request $request)
     {
-        $performances = Performance::with(['venue','ticketTypes'])->latest()->take(6)->get();
+        $query = Performance::with(['venue','ticketTypes'])->where('date', '>', now());
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('title', 'like', "%{$search}%")       
+                  ->orWhereDate('date', 'like', "%{$search}%")  
+                  ->orWhereHas('venue', function($q2) use ($search) {
+                      $q2->where('name', 'like', "%{$search}%") 
+                         ->orWhere('city', 'like', "%{$search}%");
+                  });
+            });
+        }
+
+        $performances = $query->orderBy('date')->take(6)->get();
         return view('dashboard', compact('performances'));
+    }
+
+    public function dashboard(Request $request)
+    {
+        return $this->publicDashboard($request);
     }
 
     public function index(Request $request)
@@ -145,5 +164,11 @@ class PerformanceController extends Controller
 
         return redirect()->route('admin.performances.index')
             ->with('success', 'Постановката е изтрита!');
+    }
+
+    public function show(Performance $performance)
+    {
+        $performance->load(['venue', 'ticketTypes']);
+        return view('performances.show', compact('performance'));
     }
 }

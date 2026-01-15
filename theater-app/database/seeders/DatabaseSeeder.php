@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Performance;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -47,6 +48,32 @@ class DatabaseSeeder extends Seeder
         'city' => 'Русе',
         'address' => 'пл. Свобода 4'
     ]);
+
+    // 3. Създаваме примерни Постановки (Performances)
+    \App\Models\Performance::create([
+        'title' => 'Хамлет',
+        'date' => now()->addDays(7),
+        'venue_id' => 1,
+        'image_path' => 'posters/hamlet.jpg',
+        'description' => 'Класическата трагедия на Шекспир'
+    ]);
+
+    \App\Models\Performance::create([
+        'title' => 'Ромео и Жулиета',
+        'date' => now()->addDays(14),
+        'venue_id' => 2,
+        'image_path' => 'posters/romeo.jpg',
+        'description' => 'Любовната история на всички времена'
+    ]);
+
+    \App\Models\Performance::create([
+        'title' => 'Макбет',
+        'date' => now()->addDays(21),
+        'venue_id' => 3,
+        'image_path' => 'posters/macbeth.jpg',
+        'description' => 'Шотландска трагедия'
+    ]);
+
         $types = [
             'Стандартен',
             'Студент',

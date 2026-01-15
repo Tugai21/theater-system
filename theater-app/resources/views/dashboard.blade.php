@@ -1,16 +1,29 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            📅 Последни Постановки
+            📅 Предстоящи Постановки
         </h2>
     </x-slot>
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <!-- Search Form -->
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-6">
+                <div class="p-6">
+                    <form method="GET" action="{{ route('dashboard') }}" class="flex gap-4">
+                        <div class="flex-1">
+                            <input type="text" name="search" value="{{ request('search') }}" placeholder="Търси по заглавие, дата или място..." class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-indigo-500 focus:border-indigo-500">
+                        </div>
+                        <button type="submit" class="bg-indigo-600 text-white px-6 py-2 rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            🔍 Търси
+                        </button>
+                    </form>
+                </div>
+            </div>
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach($performances as $performance)
-                    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg hover:shadow-lg transition-shadow duration-300">
+                    <a href="{{ route('performances.show', $performance) }}" class="bg-white overflow-hidden shadow-sm sm:rounded-lg hover:shadow-lg transition-shadow duration-300 block">
                         <div class="h-48 overflow-hidden bg-gray-100">
                             <img src="{{ route('media.poster', basename($performance->image_path)) }}" class="w-full h-full object-cover">
                         </div>
@@ -28,16 +41,11 @@
                                 <span>{{ $performance->date->format('d.m.Y') }}</span>
                             </div>
 
-                            <div class="flex flex-col sm:flex-row sm:justify-between items-start sm:items-center border-t pt-4 gap-2">
-                                <div class="flex gap-2 flex-wrap">
-                                    @foreach($performance->ticketTypes->where('is_active', true) as $type)
-                                        <span class="bg-green-50 border border-green-200 text-green-800 text-sm px-2 py-1 rounded">{{ $type->name }}: {{ number_format($type->price, 2) }} лв.</span>
-                                    @endforeach
-                                </div>
-                                <span class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded mt-2 sm:mt-0">Билети</span>
+                            <div class="border-t pt-4">
+                                <span class="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded">Виж билети</span>
                             </div>
                         </div>
-                    </div>
+                    </a>
                 @endforeach
             </div>
 

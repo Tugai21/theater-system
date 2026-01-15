@@ -5,9 +5,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Models\User;
 
-Route::get('/', function () {
-    return redirect()->route('login');
-});
+Route::get('/', [PerformanceController::class, 'publicDashboard'])->name('home');
 
 Route::get('/admin-status', function () {
     try {
@@ -71,6 +69,10 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
+Route::get('performances/{performance}', [PerformanceController::class, 'show'])->name('performances.show');
+
+Route::get('media/posters/{filename}', [\App\Http\Controllers\MediaController::class, 'poster'])->name('media.poster');
+
 Route::middleware('auth')->group(function () {
     Route::resource('admin/performances', PerformanceController::class)
         ->names('admin.performances')
@@ -81,8 +83,6 @@ Route::middleware('auth')->group(function () {
         ->names('admin.venues')
         ->middleware('admin')
         ->except(['show']);
-
-    Route::get('media/posters/{filename}', [\App\Http\Controllers\MediaController::class, 'poster'])->name('media.poster');
     
     Route::get('admin/users', [UserController::class, 'index'])->name('admin.users.index')->middleware('admin');
     Route::post('admin/users/{user}/toggle-admin', [UserController::class, 'toggleAdmin'])->name('admin.users.toggleAdmin')->middleware('admin');
