@@ -68,17 +68,17 @@
                             </div>
                         </div>
 
-                        <p class="text-xs text-gray-500 mt-2">Оставете празно да не се предлагат.</p>
+                        <p class="text-xs text-gray-600 mt-2">Оставете празно да не се предлагат.</p>
                     </div>
 
                     <div class="mb-6">
                         <label class="block font-medium text-sm text-gray-700">Плакат (Снимка)</label>
-                        <input type="file" name="photo" class="block w-full text-sm text-gray-500 mt-1 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" required>
+                        <input type="file" name="photo" class="block w-full text-sm text-gray-600 mt-1 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100" required>
                     </div>
 
                     <div class="flex justify-end">
                         <a href="{{ route('admin.performances.index') }}" class="text-gray-600 underline mr-4 mt-2">Отказ</a>
-                        <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded shadow hover:bg-green-700">
+                        <button type="submit" class="bg-green-600 text-black px-6 py-2 rounded shadow hover:bg-green-700">
                             Запази
                         </button>
                     </div>

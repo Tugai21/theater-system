@@ -21,7 +21,7 @@
 
                     <div class="mb-4 text-center">
                         <img src="{{ route('media.poster', basename($performance->image_path)) }}" class="h-40 mx-auto rounded shadow">
-                        <p class="text-xs text-gray-500 mt-1">Текущ плакат</p>
+                        <p class="text-xs text-gray-600 mt-1">Текущ плакат</p>
                     </div>
 
                     <div class="mb-4">
@@ -70,17 +70,17 @@
                             </div>
                         </div>
 
-                        <p class="text-xs text-gray-500 mt-2">Оставете празно да не се предлагат.</p>
+                        <p class="text-xs text-gray-600 mt-2">Оставете празно да не се предлагат.</p>
                     </div>
 
                     <div class="mb-6">
                         <label class="block font-medium text-sm text-gray-700">Смени Плакат (Опционално)</label>
-                        <input type="file" name="photo" class="block w-full text-sm text-gray-500 mt-1">
+                        <input type="file" name="photo" class="block w-full text-sm text-gray-600 mt-1">
                     </div>
 
                     <div class="flex justify-end">
                         <a href="{{ route('admin.performances.index') }}" class="text-gray-600 underline mr-4 mt-2">Отказ</a>
-                        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded shadow hover:bg-blue-700">
+                        <button type="submit" class="bg-blue-600 text-black px-6 py-2 rounded shadow hover:bg-blue-700">
                             Обнови
                         </button>
                     </div>

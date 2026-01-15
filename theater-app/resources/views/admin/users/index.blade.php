@@ -21,7 +21,7 @@
                     <input type="text" name="search" value="{{ request('search') }}" 
                            placeholder="Търси по име или имейл..." 
                            class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm w-64">
-                    <button type="submit" class="bg-gray-800 text-white px-4 py-2 rounded shadow hover:bg-gray-700">
+                     <button type="submit" class="bg-gradient-to-r from-red-600 to-red-700 text-black px-6 py-3 rounded-xl shadow-lg hover:from-red-700 hover:to-red-800 transition-all duration-200 font-semibold">
                         🔍 Търси
                     </button>
                 </form>
@@ -31,10 +31,10 @@
                 <table class="min-w-full divide-y divide-gray-200">
                     <thead class="bg-gray-50">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Име</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Имейл</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Администратор</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Действия</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Име</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Имейл</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Администратор</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-600 uppercase tracking-wider">Действия</th>
                         </tr>
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
@@ -44,7 +44,7 @@
                                     <div class="text-sm font-medium text-gray-900">{{ $user->name }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
-                                    <div class="text-sm text-gray-500">{{ $user->email }}</div>
+                                    <div class="text-sm text-gray-600">{{ $user->email }}</div>
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap">
                                     <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
@@ -55,7 +55,7 @@
                                 <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                     <form method="POST" action="{{ route('admin.users.toggleAdmin', $user) }}" style="display:inline;">
                                         @csrf
-                                        <button type="submit" class="@if($user->is_admin) bg-red-600 hover:bg-red-700 @else bg-green-600 hover:bg-green-700 @endif text-white px-3 py-1 rounded shadow text-sm">
+                                        <button type="submit" class="@if($user->is_admin) bg-red-600 hover:bg-red-700 @else bg-green-600 hover:bg-green-700 @endif text-black px-3 py-1 rounded shadow text-sm">
                                             @if($user->is_admin) Премахни админ @else Направи админ @endif
                                         </button>
                                     </form>
@@ -63,7 +63,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="px-6 py-4 text-center text-gray-500">
+                                <td colspan="4" class="px-6 py-4 text-center text-gray-600">
                                     Няма намерени потребители
                                 </td>
                             </tr>
