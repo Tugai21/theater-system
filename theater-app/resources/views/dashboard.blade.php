@@ -30,7 +30,11 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 @foreach($performances as $performance)
-                    <a href="{{ route('performances.show', $performance) }}" class="bg-white/90 backdrop-blur-sm overflow-hidden shadow-2xl hover:shadow-3xl sm:rounded-2xl border border-red-100 hover:border-red-300 transition-all duration-300 block group transform hover:-translate-y-2">
+                    @if(auth()->check())
+                        <a href="{{ route('performances.show', $performance) }}" class="bg-white/90 backdrop-blur-sm overflow-hidden shadow-2xl hover:shadow-3xl sm:rounded-2xl border border-red-100 hover:border-red-300 transition-all duration-300 block group transform hover:-translate-y-2">
+                    @else
+                        <a href="{{ route('login', ['redirect' => route('performances.show', $performance)]) }}" class="bg-white/90 backdrop-blur-sm overflow-hidden shadow-2xl hover:shadow-3xl sm:rounded-2xl border border-red-100 hover:border-red-300 transition-all duration-300 block group transform hover:-translate-y-2">
+                    @endif
                         <div class="h-56 overflow-hidden bg-gradient-to-br from-red-100 to-yellow-100 relative">
                             <img src="{{ route('media.poster', basename($performance->image_path)) }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
                             <div class="absolute top-4 right-4 bg-red-600 text-black px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
@@ -72,3 +76,4 @@
         </div>
     </div>
 </x-app-layout>
+

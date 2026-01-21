@@ -69,7 +69,7 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-Route::get('performances/{performance}', [PerformanceController::class, 'show'])->name('performances.show');
+Route::get('performances/{performance}', [PerformanceController::class, 'show'])->middleware('auth')->name('performances.show');
 
 Route::get('media/posters/{filename}', [\App\Http\Controllers\MediaController::class, 'poster'])->name('media.poster');
 
